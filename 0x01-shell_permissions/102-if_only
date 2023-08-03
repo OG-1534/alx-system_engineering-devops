@@ -1,0 +1,2 @@
+#!/bain/bash
+chown --reference=guillaume betty hello
