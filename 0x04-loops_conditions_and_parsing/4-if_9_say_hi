@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# This script is displaying "Best School" 10 times but after the 9th iteration display "Hi" on a new line
+
+line_count=1
+
+while [ $line_count -le 10 ]
+do
+	echo "Best School"
+	if [ $line_count -eq 9 ]
+	then
+		echo "Hi"
+	fi
+	((line_count++))
+done
