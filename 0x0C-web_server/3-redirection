@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Bash script containing commands
+# to automatically configure a Ubuntu machine
+# Configure your Nginx server so that
+# /redirect_me is redirecting to another page
+# The redirection must be a “301 Moved Permanently”
+
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+         sudo apt-get install nginx -y
+
+echo -e "\nSetting up some minor stuff.\n"
+
+# nginx service starting
+sudo service nginx start
+
+# nginx allowed on firewall
+sudo ufw allow 'Nginx HTTP'
+
+# User given ownership to easily edit website files
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# Default index backup
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# New index created
+echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
+
+# Setting up /redirect_me to a youtube video
+sudo sed -i '24i\       rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+
+# Nginx restarting
+sudo service nginx restart
+
+echo -e "\nCompleted.\n"
