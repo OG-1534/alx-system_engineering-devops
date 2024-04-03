@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# install load balancer
+# install HAproxy to load balancer lb-01 server
 
 
 echo -e "Updating and doing some minor checks...\n"
@@ -40,8 +40,8 @@ frontend clickviral-tech-frontend
 
 backend clickviral-tech-backend
     balance roundrobin
-    server 494210-web-01 100.25.47.123 check
-    server 494210-web-02 100.26.169.189 check
+    server 494210-web-01 100.25.47.123:80 check
+    server 494210-web-02 100.26.169.189:80 check
 "
 
 # shellcheck disable=SC2154
