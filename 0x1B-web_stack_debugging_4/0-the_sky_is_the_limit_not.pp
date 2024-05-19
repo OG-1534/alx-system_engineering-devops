@@ -1,4 +1,17 @@
-exec { 'modify_max_open_files_limit_setting':
-  command => 'sed -i "s/# worker_rlimit_nofile 1024;/worker_rlimit_nofile 10000;/" /etc/nginx/nginx.conf && sudo service nginx restart',
-  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+#Increase the amonut of traffic handleed by Nginx server
+
+#Increse default files ULIMIT
+exec { 'fix--for-nginx':
+	# Modify the vlue of ULIMIT
+	command => '/bin/sed -i "s/15/4096/" /etc/default/nginx',
+	# Specify the sed command path
+	path => 'usr/local/bin/:/bin/',
+}
+
+# Restart Nginx
+exec { 'nginx-restart':
+	# Restart Nginx service
+	command => '/etc/init.d/nginx restart',
+	# Specify the init.d script path
+	path => '/etc/init,d/',
 }
